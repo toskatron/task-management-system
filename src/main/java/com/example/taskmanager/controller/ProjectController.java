@@ -5,33 +5,27 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.taskmanager.model.Project;
+import com.example.taskmanager.dto.ProjectRequest;
+import com.example.taskmanager.dto.ProjectResponse;
 import com.example.taskmanager.service.ProjectService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
-
+	
     @Autowired
     private ProjectService projectService;
 
     @PostMapping
-    public Project createProject(@RequestBody Project project) {
-        return projectService.createProject(project);
+    public ProjectResponse createProject(@Valid @RequestBody ProjectRequest request) {
+        return projectService.createProject(request);
     }
 
     @GetMapping
-    public List<Project> getAllProjects() {
+    public List<ProjectResponse> getProjects() {
         return projectService.getAllProjects();
     }
-
-    @GetMapping("/{id}")
-    public Project getProject(@PathVariable Long id) {
-        return projectService.getProjectById(id);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteProject(@PathVariable Long id) {
-        projectService.deleteProject(id);
-    }
+    
 }
