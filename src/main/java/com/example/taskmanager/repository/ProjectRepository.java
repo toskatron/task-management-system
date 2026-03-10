@@ -1,5 +1,8 @@
 package com.example.taskmanager.repository;
 
-public class ProjectRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.taskmanager.model.Project;
+
+public interface ProjectRepository extends JpaRepository<Project, Long> {
 
 }
