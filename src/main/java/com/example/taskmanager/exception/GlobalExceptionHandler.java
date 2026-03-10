@@ -1,14 +1,14 @@
 package com.example.taskmanager.exception;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleRuntimeException(RuntimeException ex) {
-        return ex.getMessage();
+    public ResponseEntity<?> handleRuntime(RuntimeException ex) {
+
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }

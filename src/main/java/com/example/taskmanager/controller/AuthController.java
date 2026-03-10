@@ -1,19 +1,19 @@
 package com.example.taskmanager.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import com.example.taskmanager.dto.AuthResponse;
-import com.example.taskmanager.dto.LoginRequest;
-import com.example.taskmanager.dto.RegisterRequest;
+import com.example.taskmanager.dto.*;
 import com.example.taskmanager.service.UserService;
+
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/register")
     public AuthResponse register(@RequestBody RegisterRequest request) {
