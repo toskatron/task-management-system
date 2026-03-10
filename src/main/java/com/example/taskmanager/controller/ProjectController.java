@@ -1,31 +1,31 @@
 package com.example.taskmanager.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.taskmanager.dto.ProjectRequest;
+import com.example.taskmanager.dto.CreateProjectRequest;
 import com.example.taskmanager.dto.ProjectResponse;
+import com.example.taskmanager.model.Project;
 import com.example.taskmanager.service.ProjectService;
-
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
-	
-    @Autowired
-    private ProjectService projectService;
 
-    @PostMapping
-    public ProjectResponse createProject(@Valid @RequestBody ProjectRequest request) {
-        return projectService.createProject(request);
+    private final ProjectService projectService;
+
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
     }
 
     @GetMapping
-    public List<ProjectResponse> getProjects() {
-        return projectService.getAllProjects();
+    public Page<Project> getProjects(Pageable pageable) {
+        return projectService.getProjects(pageable);
     }
-    
+
+    @PostMapping
+    public ProjectResponse createProject(@RequestBody CreateProjectRequest request) {
+        return projectService.createProject(request);
+    }
 }

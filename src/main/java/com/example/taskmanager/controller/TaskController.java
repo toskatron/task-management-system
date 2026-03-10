@@ -30,6 +30,13 @@ public class TaskController {
     public Task updateTaskStatus(@PathVariable Long id, @RequestParam TaskStatus status) {
         return taskService.updateTaskStatus(id, status);
     }
+    
+    @PutMapping("/{taskId}/assign/{userId}")
+    public Task assignTask(@PathVariable Long taskId,
+                           @PathVariable Long userId) {
+
+        return taskService.assignTask(taskId, userId);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id) {

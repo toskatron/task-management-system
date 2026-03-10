@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.example.taskmanager.repository.UserRepository;
+import com.example.taskmanager.model.User;
 import com.example.taskmanager.model.Task;
 import com.example.taskmanager.model.TaskStatus;
 import com.example.taskmanager.repository.TaskRepository;
@@ -15,7 +16,11 @@ public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public Task createTask(Task task) {
+        task.setStatus(TaskStatus.TODO);
         return taskRepository.save(task);
     }
 
@@ -35,5 +40,18 @@ public class TaskService {
 
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
+    }
+
+    public Task assignTask(Long taskId, Long userId) {
+
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        task.setAssignedUser(user);
+
+        return taskRepository.save(task);
     }
 }
