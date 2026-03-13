@@ -3,6 +3,7 @@ package com.example.taskmanager.service;
 import com.example.taskmanager.dto.LoginRequest;
 import com.example.taskmanager.dto.RegisterRequest;
 import com.example.taskmanager.dto.AuthResponse;
+import com.example.taskmanager.model.Role;
 import com.example.taskmanager.model.User;
 import com.example.taskmanager.repository.UserRepository;
 import com.example.taskmanager.security.JwtService;
@@ -33,7 +34,8 @@ public class UserService {
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-
+        user.setRole(Role.USER);
+        
         userRepository.save(user);
 
         String token = jwtService.generateToken(user.getUsername());
